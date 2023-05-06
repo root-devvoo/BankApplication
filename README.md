@@ -6,6 +6,8 @@
 
 ## 💻 개발환경
 
+- Visual Studio Code (VSCode)
+
 - Java 11
 
 - SpringBoot : 2.7.11
@@ -18,7 +20,7 @@
 
   > MariaDB
 
-
+<br>
 
 - 테스트 도구
 
