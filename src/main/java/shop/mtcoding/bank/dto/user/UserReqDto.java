@@ -14,6 +14,13 @@ import shop.mtcoding.bank.domain.user.UserEnum;
 public class UserReqDto {
     @Setter
     @Getter
+    public static class LoginReqDto {
+        private String username;
+        private String password;
+    }
+
+    @Setter
+    @Getter
     public static class JoinReqDto {
         // 유효성 검사
         // 영문, 숫자는 되고, 같이 최소 2~20자 이내
