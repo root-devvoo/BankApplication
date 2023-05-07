@@ -3,17 +3,10 @@ package shop.mtcoding.bank.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.transaction.Transaction;
@@ -23,7 +16,9 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountWithdrawReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
+import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDetailRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountListRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountWithdrawRespDto;
@@ -153,19 +148,18 @@ public class AccountService {
         return new AccountWithdrawRespDto(withdrawAccountPS, transactionPS);
     }
 
-    @Setter
-    @Getter
-    public static class AccountWithdrawReqDto {
-        @NotNull
-        @Digits(integer = 4, fraction = 4)
-        private Long number;
-        @NotNull
-        @Digits(integer = 4, fraction = 4)
-        private Long password;
-        @NotNull
-        private Long amount;
-        @NotEmpty
-        @Pattern(regexp = "WITHDRAW")
-        private String gubun;
+    public AccountDetailRespDto 계좌상세보기(Long number, Long userId, int page) {
+        // 1. 구분값, 페이지고정
+        String gubun = "ALL";
+
+        Account accountPS = accountRepository.findByNumber(number).orElseThrow(
+                () -> new CustomApiException("계좌를 찾을 수 없습니다"));
+
+        // 3. 계좌 소유자 확인
+        accountPS.checkOwner(userId);
+
+        // 4. 입출금 목록 보기
+        List<Transaction> transactionList = transactionRepository.findTransactionList(accountPS.getId(), gubun, page);
+        return new AccountDetailRespDto(accountPS, transactionList);
     }
 }

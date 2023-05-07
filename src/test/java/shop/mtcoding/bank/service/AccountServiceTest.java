@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +28,6 @@ import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountDepositRespDto;
 import shop.mtcoding.bank.dto.account.AccountRespDto.AccountSaveRespDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
-import shop.mtcoding.bank.service.AccountService.AccountWithdrawReqDto;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest extends DummyObject {

@@ -74,7 +74,6 @@ public class TransactionControllerTest extends DummyObject {
         // then
         resultActions.andExpect(jsonPath("$.data.transactions[0].balance").value(900L));
         resultActions.andExpect(jsonPath("$.data.transactions[1].balance").value(1000L));
-
     }
 
     private void dataSetting() {
