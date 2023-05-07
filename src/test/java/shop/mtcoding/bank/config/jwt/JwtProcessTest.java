@@ -10,14 +10,23 @@ import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class JwtProcessTest {
-    @Test
-    public void create_test() throws Exception {
+
+    private String createToken() {
         // given
-        User user = User.builder().id(1L).role(UserEnum.CUSTOMER).build();
+        User user = User.builder().id(1L).role(UserEnum.ADMIN).build();
         LoginUser loginUser = new LoginUser(user);
 
         // when
         String jwtToken = JwtProcess.create(loginUser);
+        return jwtToken;
+    }
+
+    @Test
+    public void create_test() throws Exception {
+        // given
+
+        // when
+        String jwtToken = createToken();
         System.out.println("테스트 : " + jwtToken);
 
         // then
@@ -27,7 +36,8 @@ public class JwtProcessTest {
     @Test
     public void verify_test() throws Exception {
         // given
-        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NDU2NjY5Mn0._I4v97brPIVdri0EmgIW8QOj0j6TOVWWlhKihhCjU15eN-_vepxE_R5vNXcP_dQ9Rfgbe1GZNlEyVZDdOxr-jw";
+        String token = createToken(); // Bearer 제거해서 처리하기
+        String jwtToken = token.replace(JwtVO.TOKEN_PREFIX, "");
 
         // when
         LoginUser loginUser = JwtProcess.verify(jwtToken);
@@ -36,6 +46,6 @@ public class JwtProcessTest {
 
         // then
         assertThat(loginUser.getUser().getId()).isEqualTo(1L);
-        assertThat(loginUser.getUser().getRole()).isEqualTo(UserEnum.CUSTOMER);
+        assertThat(loginUser.getUser().getRole()).isEqualTo(UserEnum.ADMIN);
     }
 }

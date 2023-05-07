@@ -17,9 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,10 +28,12 @@ import shop.mtcoding.bank.domain.account.Account;
 import shop.mtcoding.bank.domain.account.AccountRepository;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserRepository;
+import shop.mtcoding.bank.dto.account.AccountReqDto.AccountDepositReqDto;
 import shop.mtcoding.bank.dto.account.AccountReqDto.AccountSaveReqDto;
 import shop.mtcoding.bank.handler.ex.CustomApiException;
+import shop.mtcoding.bank.service.AccountService.AccountWithdrawReqDto;
 
-@Transactional
+@Sql("classpath:db/teardown.sql")
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
@@ -70,7 +72,7 @@ public class AccountControllerTest extends DummyObject {
     public void saveAccount_test() throws Exception {
         // given
         AccountSaveReqDto accountSaveReqDto = new AccountSaveReqDto();
-        accountSaveReqDto.setNumber(1111L);
+        accountSaveReqDto.setNumber(9999L);
         accountSaveReqDto.setPassword(1234L);
         String requestBody = om.writeValueAsString(accountSaveReqDto);
         System.out.println("테스트 : " + requestBody);
@@ -108,6 +110,50 @@ public class AccountControllerTest extends DummyObject {
         // Junit 테스트에서 delete 쿼리는 DB관련(DML)으로 가장 마지막에 실행되면 발동안됨.
         assertThrows(CustomApiException.class, () -> accountRepository.findByNumber(number).orElseThrow(
                 () -> new CustomApiException("계좌를 찾을 수 없습니다"))); // 계좌를 찾을 수 없다 ... 삭제가 잘 되었으니까
+    }
+
+    @Test
+    public void depositAccount_test() throws Exception {
+        // given
+        AccountDepositReqDto accountDepositReqDto = new AccountDepositReqDto();
+        accountDepositReqDto.setNumber(1111L);
+        accountDepositReqDto.setAmount(100L);
+        accountDepositReqDto.setGubun("DEPOSIT");
+        accountDepositReqDto.setTel("01088887777");
+
+        String requestBody = om.writeValueAsString(accountDepositReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/api/account/deposit").content(requestBody).contentType(MediaType.APPLICATION_JSON));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isCreated());
+    }
+
+    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @Test
+    public void withdrawAccount_test() throws Exception {
+        // given
+        AccountWithdrawReqDto accountWithdrawReqDto = new AccountWithdrawReqDto();
+        accountWithdrawReqDto.setNumber(1111L);
+        accountWithdrawReqDto.setPassword(1234L);
+        accountWithdrawReqDto.setAmount(100L);
+        accountWithdrawReqDto.setGubun("WITHDRAW");
+
+        String requestBody = om.writeValueAsString(accountWithdrawReqDto);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/api/s/account/withdraw").content(requestBody).contentType(MediaType.APPLICATION_JSON));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
 
     }
 }

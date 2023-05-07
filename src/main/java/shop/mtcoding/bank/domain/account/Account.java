@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.access.method.P;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -68,5 +69,27 @@ public class Account {
         if (user.getId() != userId) { // Lazy 로딩이어도 id를 조회할 때는 select 쿼리가 날라가지 않는다.
             throw new CustomApiException("계좌 소유자가 아닙니다");
         }
+    }
+
+    public void deposit(Long amount) {
+        balance = balance + amount;
+
+    }
+
+    public void checkSamePassword(Long password) {
+        if (this.password.longValue() != password.longValue()) {
+            throw new CustomApiException("계좌 비밀번호 검증에 실패했습니다");
+        }
+    }
+
+    public void checkBalance(Long amount) {
+        if (this.balance < amount) {
+            throw new CustomApiException("계좌 잔액이 부족합니다");
+        }
+    }
+
+    public void withdraw(Long amount) {
+        checkBalance(amount);
+        balance = balance - amount;
     }
 }

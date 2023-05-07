@@ -68,9 +68,38 @@ public class RegexTest {
 
     @Test
     public void user_email_test() throws Exception {
-        String email = "ssarj@nate.com";
+        String email = "ssarj@nate.com"; // ac.kr co.kr or.kr X
         // 영어,한글, 1자~20자
         boolean result = Pattern.matches("^[a-zA-Z0-9]{2,10}@[a-zA-Z0-9]{2,6}\\.[a-zA-Z]{2,3}$", email);
+        System.out.println("테스트 : " + result);
+    }
+
+    @Test
+    public void account_gubun_test1() throws Exception {
+        String gubun = "DEPOSIT";
+        boolean result = Pattern.matches("^(DEPOSIT)$", gubun); // 정확하게 문자열을 체크하려면 괄호()를 한다. "DEPOSIT" 이라고 매치해도 되기는 하지만,
+                                                                // 기본적인 문법을 지킴.. 시작,끝 ... 이렇게 적는게 좋다.
+        System.out.println("테스트 : " + result);
+    }
+
+    @Test
+    public void account_gubun_test2() throws Exception {
+        String gubun = "TRANSFER";
+        boolean result = Pattern.matches("^(DEPOSIT|TRANSFER)$", gubun);
+        System.out.println("테스트 : " + result);
+    }
+
+    @Test
+    public void account_tel_test1() throws Exception {
+        String tel = "010-3333-7777";
+        boolean result = Pattern.matches("^[0-9]{3}-[0-9]{4}-[0-9]{4}", tel);
+        System.out.println("테스트 : " + result);
+    }
+
+    @Test
+    public void account_tel_test2() throws Exception {
+        String tel = "01033337777";
+        boolean result = Pattern.matches("^[0-9]{11}", tel);
         System.out.println("테스트 : " + result);
     }
 }

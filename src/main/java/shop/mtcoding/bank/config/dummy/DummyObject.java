@@ -5,10 +5,78 @@ import java.time.LocalDateTime;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import shop.mtcoding.bank.domain.account.Account;
+import shop.mtcoding.bank.domain.account.AccountRepository;
+import shop.mtcoding.bank.domain.transaction.Transaction;
+import shop.mtcoding.bank.domain.transaction.TransactionEnum;
 import shop.mtcoding.bank.domain.user.User;
 import shop.mtcoding.bank.domain.user.UserEnum;
 
 public class DummyObject {
+
+    protected Transaction newWithdrawTransaction(Account account, AccountRepository accountRepository) {
+        account.withdraw(100L); // 1000원이 있었다면 900원이 됨
+
+        // Repository Test에서는 더티체킹 됨
+        // Controller Test에서는 더티체킹 안됨
+        if (accountRepository != null) {
+            accountRepository.save(account);
+        }
+        Transaction transaction = Transaction.builder()
+                .withdrawAccount(account)
+                .depositAccount(null)
+                .withdrawAccountBalance(account.getBalance())
+                .depositAccountBalance(null)
+                .amount(100L)
+                .gubun(TransactionEnum.WITHDRAW)
+                .sender(account.getNumber() + "")
+                .receiver("ATM")
+                .build();
+        return transaction;
+    }
+
+    protected Transaction newDepositTransaction(Account account, AccountRepository accountRepository) {
+        account.deposit(100L); // 1000원이 있었다면 1100원이 됨
+        // 더티체킹이 안되기 때문에
+        if (accountRepository != null) {
+            accountRepository.save(account);
+        }
+        Transaction transaction = Transaction.builder()
+                .withdrawAccount(null)
+                .depositAccount(account)
+                .withdrawAccountBalance(null)
+                .depositAccountBalance(account.getBalance())
+                .amount(100L)
+                .gubun(TransactionEnum.DEPOSIT)
+                .sender("ATM")
+                .receiver(account.getNumber() + "")
+                .tel("01022227777")
+                .build();
+        return transaction;
+    }
+
+    // 이체 Transaction (현재 만들지 않았기 때문에 주석만 남김)
+
+    // 계좌 1111L 1000원
+    // 입금 트랜잭션 -> 계좌 1100원 변경 -> 입금 트랜잭션 히스토리가 생성되어야 함.
+    protected static Transaction newMockDepositTransaction(Long id, Account account) {
+        account.deposit(100L);
+        Transaction transaction = Transaction.builder()
+                .id(id)
+                .withdrawAccount(null) // 출금 계좌 없음...ATM기로 넣을거니까
+                .depositAccount(account)
+                .withdrawAccountBalance(null) // 출금 계좌 없으므로 모름
+                .depositAccountBalance(account.getBalance()) // depositAccountBalance는 +된 값을 넣음
+                .amount(100L) // 테스트 시 amount는 고정하기 위해서
+                .gubun(TransactionEnum.DEPOSIT)
+                .sender("ATM")
+                .receiver(account.getNumber() + "")
+                .tel("01088887777")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return transaction;
+    }
+
     // 테스트로 entity에 save 할 때 씀
     protected User newUser(String username, String fullname) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
