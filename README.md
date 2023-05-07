@@ -12,7 +12,9 @@
 
 - SpringBoot : 2.7.11
 
-  > SpringBoot Security(JWT Token), Spring AOP
+  > SpringBoot Security, Spring AOP
+
+- java-jwt : 4.2.1
 
 - Gradle : 7.6.1
 
