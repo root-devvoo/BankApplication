@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.dto.ResponseDto;
@@ -20,6 +21,7 @@ import shop.mtcoding.bank.service.TransactionService;
 public class TransactionController {
     private final TransactionService transactionService;
 
+    @ApiOperation(value = "입/출금목록 보기", notes = "입/출금목록 보기")
     @GetMapping("/s/account/{number}/transaction")
     public ResponseEntity<?> findTransactionList(@PathVariable Long number,
             @RequestParam(value = "gubun", defaultValue = "ALL") String gubun,

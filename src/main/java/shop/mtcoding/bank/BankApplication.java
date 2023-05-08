@@ -16,5 +16,4 @@ public class BankApplication {
 		// System.out.println(name);
 		// }
 	}
-
 }

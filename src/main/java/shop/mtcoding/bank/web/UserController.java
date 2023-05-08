@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.bank.dto.ResponseDto;
 import shop.mtcoding.bank.dto.user.UserReqDto.JoinReqDto;
@@ -22,6 +23,7 @@ import shop.mtcoding.bank.service.UserService;
 public class UserController {
     private final UserService userService;
 
+    @ApiOperation(value = "회원가입", notes = "회원가입")
     @PostMapping("/join") // 회원가입은 인증이 필요 없으므로
     public ResponseEntity<?> join(@RequestBody @Valid JoinReqDto joinReqDto, BindingResult bindingResult) {
         JoinRespDto joinRespDto = userService.회원가입(joinReqDto);

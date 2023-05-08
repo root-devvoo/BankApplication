@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.bank.config.auth.LoginUser;
 import shop.mtcoding.bank.dto.ResponseDto;
@@ -34,6 +35,7 @@ import shop.mtcoding.bank.service.AccountService;
 public class AccountController {
     private final AccountService accountService;
 
+    @ApiOperation(value = "계좌 등록하기", notes = "계좌 등록하기")
     @PostMapping("/s/account")
     public ResponseEntity<?> saveAccount(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto, // validation 체크를 위해
             BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
@@ -48,6 +50,7 @@ public class AccountController {
     // 인증이 필요하고, account 테이블 데이터 다 주세요!!
 
     // 인증이 필요하고, account 테이블에 login한 유저의 계좌만 주세요.
+    @ApiOperation(value = "사용자별 계좌목록보기", notes = "사용자별 계좌목록보기")
     @GetMapping("/s/account/login-user")
     public ResponseEntity<?> findUserAccount(@AuthenticationPrincipal LoginUser loginUser) {
         AccountListRespDto AccountListRespDto = accountService.계좌목록보기_유저별(loginUser.getUser().getId());
@@ -55,6 +58,7 @@ public class AccountController {
     }
 
     // 계좌 삭제
+    @ApiOperation(value = "계좌 삭제하기", notes = "계좌 삭제하기")
     @DeleteMapping("/s/account/{number}")
     public ResponseEntity<?> deleteAccount(@PathVariable Long number, @AuthenticationPrincipal LoginUser loginUser) {
         accountService.계좌삭제(number, loginUser.getUser().getId());
@@ -62,6 +66,7 @@ public class AccountController {
     }
 
     // 입금
+    @ApiOperation(value = "계좌 입금하기", notes = "계좌 삭제하기")
     @PostMapping("/account/deposit")
     public ResponseEntity<?> depositAccount(@RequestBody @Valid AccountDepositReqDto accountDepositReqDto,
             BindingResult bindingResult) {
@@ -70,6 +75,7 @@ public class AccountController {
     }
 
     // 출금
+    @ApiOperation(value = "계좌 출금하기", notes = "계좌 출금하기")
     @PostMapping("/s/account/withdraw")
     public ResponseEntity<?> withdrawAccount(@RequestBody @Valid AccountWithdrawReqDto accountWithdrawReqDto,
             BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
@@ -81,6 +87,7 @@ public class AccountController {
     // 계좌 이체 (아직 구현x)
 
     // 계좌상세보기
+    @ApiOperation(value = "계좌 상세보기", notes = "계좌 상세보기")
     @GetMapping("/s/account/{number}")
     public ResponseEntity<?> findDetailAccount(@PathVariable Long number,
             @RequestParam(value = "page", defaultValue = "0") int page,
