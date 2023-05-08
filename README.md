@@ -26,7 +26,7 @@
 
 - 테스트 도구
 
-  > JUnit, Postman
+  > JUnit5, Postman
 
 ---
 
