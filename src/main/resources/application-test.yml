@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9090
   servlet:
     encoding:
       charset: utf-8
@@ -7,10 +7,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name}
+    url: jdbc:mariadb://$rds-bankapp.crqatvmsvhw1.ap-northeast-2.rds.amazonaws.com:3306/$bank
     driver-class-name: org.mariadb.jdbc.Driver
-    username: ${rds.username}
-    password: ${rds.password}
+    username: admin
+    password: admin1234!
   h2:
     console:
       enabled: true
