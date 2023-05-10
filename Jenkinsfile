@@ -70,10 +70,10 @@ pipeline {
             agent any
             steps {
                 print("==== Image push on ECR ====")
-                sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
+                // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
                 script {
-                    docker.withRegistry("https://${ECR_URL}", "ecr:${REGION}:${registryCredential}") {
-                        dockerImage.push("Backend${BUILD_NUMBER}")
+                    docker.withRegistry("https://${IMAGE_NAME}", "ecr:${REGION}:${registryCredential}") {
+                        // dockerImage.push("Backend${BUILD_NUMBER}")
                         docker.image("${IMAGE_NAME}:Backend${BUILD_NUMBER}").push()
                     }
                 }
