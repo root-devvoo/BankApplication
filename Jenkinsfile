@@ -1,4 +1,4 @@
-def ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
+
 
 pipeline {
     agent any
@@ -8,6 +8,7 @@ pipeline {
     }
 
     environment {
+        ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
         registryCredential = "AWS credit"
         // imageName = "${ECR_URL}:Backend${BUILD_NUMBER}"
         dockerImage = ''
@@ -53,10 +54,10 @@ pipeline {
             agent any
             steps {
                 print("==== Build Docker ====")
-                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
-                script {
-                    dockerImage = docker.build imageName
-                }
+                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                // script {
+                //     dockerImage = docker.build imageName
+                // }
             }
             post {
                 failure {
@@ -70,9 +71,11 @@ pipeline {
             steps {
                 print("==== Image push on ECR ====")
                 // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
-                docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential)
-                dockerImage.push("Backend${BUILD_NUMBER}")
-                    
+                script {
+                    docker.withRegistry(ECR_URL, registryCredential) {
+                        dockerImage.push("Backend${BUILD_NUMBER}")
+                    }
+                }
                 print("==== Docker remove Images ====")
                 sh "docker image prune -a -f"
             }
