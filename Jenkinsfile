@@ -39,7 +39,7 @@ pipeline {
         agent any
         steps {
         echo 'Bulid Gradle'
-        dir ('.'){
+        dir ('.') {
             sh "chmod +x gradlew"
             sh "./gradlew --debug build"
             }
@@ -56,7 +56,7 @@ pipeline {
                 print("==== Build Docker ====")
                 sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
                 script {
-                    dockerImage = docker.build imageName .
+                    dockerImage = docker.build imageName
                 }
             }
             post {
