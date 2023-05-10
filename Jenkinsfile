@@ -90,7 +90,7 @@ pipeline {
                     echo "Error! K8S Manifest Update"
                 }
                 success {
-                    echo "success! K8S Manifest Update""
+                    echo "success! K8S Manifest Update"
                 }
             }
         }
