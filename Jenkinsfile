@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         registryCredential = 'AWS credit'
+        imageName = '${ECR_URL}:Backend${BUILD_NUMBER}'
         dockerImage = ''
     }
 
@@ -53,9 +54,9 @@ pipeline {
         stage('Docker Image Build') {
             steps {
                 print("==== Build Docker ====")
-                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
                 script {
-                    dockerImage = docker.build("${ECR_URL}:Backend${BUILD_NUMBER} .")
+                    dockerImage = docker.build imageName .
                 }
             }
             post {
