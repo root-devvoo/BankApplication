@@ -7,7 +7,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://$rds-bankapp.crqatvmsvhw1.ap-northeast-2.rds.amazonaws.com:3306/$bank
+    url: jdbc:mariadb://$rds-bankapp.crqatvmsvhw1.ap-northeast-2.rds.amazonaws.com:3306/bank
     driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: admin1234!
