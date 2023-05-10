@@ -7,6 +7,10 @@ pipeline {
         jdk("OpenJDK 11")
     }
 
+    environment {
+        registryCredential = 'AWS credit'
+    }
+
     stages {
         // git에서 repository clone
         stage('Prepare') {
@@ -28,7 +32,7 @@ pipeline {
         
 
 
-    // gradle build
+    // gradle
     stage('Bulid Gradle') {
         agent any
         steps {
@@ -47,9 +51,6 @@ pipeline {
 
         stage('Docker Image Build') {
             steps {
-                print('==== ECR Login ====')
-                // sh "aws ecr get-login --region ap-northeast-2 --no-include-email | sh"
-                sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/"
                 print("==== Build Docker ====")
                 sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
             }
@@ -66,9 +67,13 @@ pipeline {
         stage('Image push to ECR') {
             steps {
                 print("==== Image push on ECR ====")
-                sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
+                // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
+                script {
+                    docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential) {
+                        app.push("Backend${BUILD_NUMBER}")
+                }
                 print("==== Docker remove Images ====")
-                sh "docker image rm ${ECR_URL}:Backend${BUILD_NUMBER}"
+                sh "docker image prune -a -f"
             }
             post {
                 failure {
@@ -79,6 +84,7 @@ pipeline {
                 }
             }
         }
+    }
 
         stage("K8S Manifest Update") {
             steps {
