@@ -1,4 +1,4 @@
-def ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp"
+def ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
 
 pipeline {
     agent any
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 print("==== Manifest Update ====")
                 sh "whoami"
-                sh "sh /var/lib/jenkins/workspace/cicd/BackImageUpdate.sh ${BUILD_NUMBER}"
+                sh "sh /home/ubuntu/cicd/BankImageUpdate.sh ${BUILD_NUMBER}"
             }
             post {
                 failure {
