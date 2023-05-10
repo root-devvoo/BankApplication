@@ -55,9 +55,9 @@ pipeline {
             steps {
                 print("==== Build Docker ====")
                 // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
-                script {
-                    dockerImage = docker.build imageName .
-                }
+                // script {
+                dockerImage = docker.build imageName .
+                // }
             }
             post {
                 failure {
