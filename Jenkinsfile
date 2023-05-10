@@ -18,40 +18,40 @@ pipeline {
         stage('Prepare') {
             steps {
                 echo 'Clonning Repository'
-            git url: 'https://github.com/root-devvoo/BankApplication.git',
-            branch: 'test',
-            credentialsId: 'root-devvoo_git'
+                git url: 'https://github.com/root-devvoo/BankApplication.git',
+                branch: 'test',
+                credentialsId: 'root-devvoo_git'
             }
             post {
-            success { 
-            echo 'Successfully Cloned Repository'
-            }
-            failure {
-            error 'This pipeline stops here...(Prepare)'
+                success { 
+                    echo 'Successfully Cloned Repository'
+                }
+                failure {
+                    error 'This pipeline stops here...(Prepare)'
+                }
             }
         }
-    }
         
 
-
-    // gradle
-    stage('Bulid Gradle') {
-        agent any
-        steps {
-        echo 'Bulid Gradle'
-        dir ('.') {
-            sh "chmod +x gradlew"
-            sh "./gradlew --debug build"
+        // gradle
+        stage('Bulid Gradle') {
+            agent any
+            steps {
+                echo 'Bulid Gradle'
+                dir ('.') {
+                    sh "chmod +x gradlew"
+                    sh "./gradlew --debug build"
+                }
+            }
+            post {
+                failure {
+                    error 'This pipeline stops here...(Build Gradle)'
+                }
             }
         }
-        post {
-        failure {
-            error 'This pipeline stops here...(Build Gradle)'
-            }
-        }
-    }
 
         stage('Docker Image Build') {
+            agent any
             steps {
                 print("==== Build Docker ====")
                 sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
@@ -70,15 +70,17 @@ pipeline {
         }
 
         stage('Image push to ECR') {
+            agent any
             steps {
                 print("==== Image push on ECR ====")
                 // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
                 script {
                     docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential) {
                         dockerImage.push("Backend${BUILD_NUMBER}")
+                    }
+                    print("==== Docker remove Images ====")
+                    sh "docker image prune -a -f"
                 }
-                print("==== Docker remove Images ====")
-                sh "docker image prune -a -f"
             }
             post {
                 failure {
@@ -89,7 +91,6 @@ pipeline {
                 }
             }
         }
-    }
 
         stage("K8S Manifest Update") {
             steps {
