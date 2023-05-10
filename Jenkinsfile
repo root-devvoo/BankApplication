@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         registryCredential = 'AWS credit'
+        dockerImage = ''
     }
 
     stages {
@@ -52,7 +53,10 @@ pipeline {
         stage('Docker Image Build') {
             steps {
                 print("==== Build Docker ====")
-                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                script {
+                    dockerImage = docker.build("${ECR_URL}:Backend${BUILD_NUMBER} .")
+                }
             }
             post {
                 failure {
@@ -70,7 +74,7 @@ pipeline {
                 // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
                 script {
                     docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential) {
-                        app.push("Backend${BUILD_NUMBER}")
+                        dockerImage.push("Backend${BUILD_NUMBER}")
                 }
                 print("==== Docker remove Images ====")
                 sh "docker image prune -a -f"
