@@ -31,7 +31,6 @@ pipeline {
                 }
             }
         }
-        
 
         // gradle
         stage('Bulid Gradle') {
@@ -54,17 +53,14 @@ pipeline {
             agent any
             steps {
                 print("==== Build Docker ====")
-                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
-                script {
-                    dockerImage = docker.build imageName
-                }
+                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                // script {
+                //     dockerImage = docker.build imageName
+                // }
             }
             post {
                 failure {
                     echo "Failed Docker Image Build"
-                }
-                success {
-                    echo "Build success!"
                 }
             }
         }
@@ -78,16 +74,13 @@ pipeline {
                     docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential) {
                         dockerImage.push("Backend${BUILD_NUMBER}")
                     }
-                    print("==== Docker remove Images ====")
-                    sh "docker image prune -a -f"
                 }
+                print("==== Docker remove Images ====")
+                sh "docker image prune -a -f"
             }
             post {
                 failure {
                     echo "Failed to push image (ECR)"
-                }
-                success {
-                    echo "Success! Image push on ECR"
                 }
             }
         }
@@ -101,9 +94,6 @@ pipeline {
             post {
                 failure {
                     echo "Error! K8S Manifest Update"
-                }
-                success {
-                    echo "success! K8S Manifest Update"
                 }
             }
         }
