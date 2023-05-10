@@ -10,8 +10,7 @@ pipeline {
     environment {
         ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
         registryCredential = "AWS credit"
-        imageName = "${ECR_URL}:Backend${BUILD_NUMBER}"
-        dockerImage = ''
+        // imageName = ''
     }
 
     stages {
@@ -56,7 +55,7 @@ pipeline {
                 print("==== Build Docker ====")
                 // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
                 script {
-                    dockerImage = docker.build imageName
+                    def dockerImage = docker.build(${ECR_URL}:Backend${BUILD_NUMBER})
                 }
             }
             post {
