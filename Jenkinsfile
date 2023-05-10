@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
-        ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com"
+        ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp"
         registryCredential = "AWS credit"
         REGION = 'ap-northeast-2'
     }
