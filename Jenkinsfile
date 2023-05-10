@@ -49,7 +49,7 @@ pipeline {
             steps {
                 print('==== ECR Login ====')
                 // sh "aws ecr get-login --region ap-northeast-2 --no-include-email | sh"
-                sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/"
+                sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username Brandon --password-stdin 015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/"
                 print("==== Build Docker ====")
                 sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
             }
