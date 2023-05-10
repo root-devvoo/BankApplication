@@ -53,10 +53,10 @@ pipeline {
             agent any
             steps {
                 print("==== Build Docker ====")
-                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
-                // script {
-                //     dockerImage = docker.build imageName
-                // }
+                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                script {
+                    dockerImage = docker.build imageName
+                }
             }
             post {
                 failure {
@@ -69,12 +69,10 @@ pipeline {
             agent any
             steps {
                 print("==== Image push on ECR ====")
-                sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
-                // script {
-                //     docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential) {
-                //         dockerImage.push("Backend${BUILD_NUMBER}")
-                //     }
-                // }
+                // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
+                docker.withRegistry("https://" + ${ECR_URL}, "ecr:ap-northeast-2:" + registryCredential)
+                dockerImage.push("Backend${BUILD_NUMBER}")
+                    
                 print("==== Docker remove Images ====")
                 sh "docker image prune -a -f"
             }
