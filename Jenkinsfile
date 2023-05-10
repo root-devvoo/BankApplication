@@ -55,7 +55,7 @@ pipeline {
                 print("==== Build Docker ====")
                 // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
                 script {
-                    def dockerImage = docker.build(${ECR_URL}:Backend${BUILD_NUMBER})
+                    def dockerImage = docker.build("${ECR_URL}:Backend${BUILD_NUMBER}")
                 }
             }
             post {
