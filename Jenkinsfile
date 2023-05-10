@@ -10,7 +10,7 @@ pipeline {
     environment {
         ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
         registryCredential = "AWS credit"
-        // imageName = "${ECR_URL}:Backend${BUILD_NUMBER}"
+        imageName = "${ECR_URL}:Backend${BUILD_NUMBER}"
         dockerImage = ''
     }
 
@@ -54,10 +54,10 @@ pipeline {
             agent any
             steps {
                 print("==== Build Docker ====")
-                sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
-                // script {
-                //     dockerImage = docker.build imageName
-                // }
+                // sh "docker image build -t ${ECR_URL}:Backend${BUILD_NUMBER} ."
+                script {
+                    dockerImage = docker.build imageName .
+                }
             }
             post {
                 failure {
