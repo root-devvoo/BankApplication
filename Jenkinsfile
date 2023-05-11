@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         // IMAGE_NAME = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp" // private
-        IMAGE_NAME = "public.ecr.aws/z9o0i7n0/bankapp/bankapp" // public
+        IMAGE_NAME = "public.ecr.aws/z9o0i7n0/bankapp" // public
         // ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp" // private
         ECR_URL = "public.ecr.aws/z9o0i7n0/bankapp" // public
         registryCredential = "AWS credit"
