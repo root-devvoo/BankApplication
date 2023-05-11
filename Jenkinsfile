@@ -94,7 +94,7 @@ pipeline {
                 credentialsId: 'root-devvoo_git'
                 
                 sh "cd /home/ubuntu/cicd"
-                sh "git add bankapp-api-deployment-service.yaml"
+                sh "git add ."
                 sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
                 sh "git push origin main"
             }
