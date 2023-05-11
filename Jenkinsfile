@@ -94,11 +94,14 @@ pipeline {
                 credentialsId: 'root-devvoo_git'
 
                 sh "cd /var/lib/jenkins/workspace/cicd"
+                sh "whoami"
                 sh "git add bankapp-api-deployment-service.yaml"
-                sh "pwd"
+                sh "cd /var/lib/jenkins/workspace/cicd"
                 sh "git status"
+                sh "cd /var/lib/jenkins/workspace/cicd"
                 sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
                 sh "git status"
+                sh "cd /var/lib/jenkins/workspace/cicd"
                 sh "git push origin main"
 
             }
