@@ -8,8 +8,6 @@ pipeline {
     }
 
     environment {
-        // IMAGE_NAME = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp" // private
-        // IMAGE_NAME = "public.ecr.aws/z9o0i7n0/bankapp" // public
         ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp" // private
         // ECR_URL = "public.ecr.aws/z9o0i7n0/bankapp" // public
         registryCredential = "AWS credit"
@@ -69,10 +67,8 @@ pipeline {
             agent any
             steps {
                 print("==== Image push on ECR ====")
-                // sh "docker push ${ECR_URL}:Backend${BUILD_NUMBER}"
                 script {
                     docker.withRegistry("https://${ECR_URL}", "ecr:${REGION}:${registryCredential}") {
-                        // dockerImage.push("Backend${BUILD_NUMBER}")
                         docker.image("${ECR_URL}:Backend${BUILD_NUMBER}").push()
                     }
                 }
@@ -91,6 +87,16 @@ pipeline {
                 print("==== Manifest Update ====")
                 sh "whoami"
                 sh "sh /home/ubuntu/cicd/BankImageUpdate.sh ${BUILD_NUMBER}"
+
+                // git
+                git url: 'https://github.com/root-devvoo/BankApplication_CICD.git',
+                branch: 'main',
+                credentialsId: 'root-devvoo_git'
+                
+                sh "cd /home/ubuntu/cicd"
+                sh "git add bankapp-api-deployment-service.yaml"
+                sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
+                sh "git push origin main"
             }
             post {
                 failure {
