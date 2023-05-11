@@ -8,8 +8,10 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp"
-        ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp"
+        // IMAGE_NAME = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp/bankapp" // private
+        IMAGE_NAME = public.ecr.aws/z9o0i7n0/bankapp/bankapp // public
+        // ECR_URL = "015501295117.dkr.ecr.ap-northeast-2.amazonaws.com/bankapp" // private
+        ECR_URL = "public.ecr.aws/z9o0i7n0/bankapp" // public
         registryCredential = "AWS credit"
         REGION = 'ap-northeast-2'
     }
@@ -55,9 +57,6 @@ pipeline {
             steps {
                 print("==== Build Docker ====")
                 sh "docker image build -t ${IMAGE_NAME}:Backend${BUILD_NUMBER} ."
-                // script {
-                    // def dockerImage = docker.build("${ECR_URL}:Backend${BUILD_NUMBER}")
-                // }
             }
             post {
                 failure {
