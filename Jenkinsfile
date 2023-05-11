@@ -87,6 +87,17 @@ pipeline {
                 print("==== Manifest Update ====")
                 sh "whoami"
                 sh "sh /var/lib/jenkins/workspace/cicd/BankImageUpdate.sh ${BUILD_NUMBER}"
+
+                // git manifest repo
+                git url: 'https://github.com/root-devvoo/BankApplication_CICD.git',
+                branch: 'main',
+                credentialsId: 'root-devvoo_git'
+
+                sh "cd /var/lib/jenkins/workspace/cicd"
+                sh "git add bankapp-api-deployment-service.yaml"
+                sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
+                sh "git push origin main"
+
             }
             post {
                 failure {
