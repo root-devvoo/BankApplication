@@ -86,7 +86,7 @@ pipeline {
             steps {
                 print("==== Manifest Update ====")
                 sh "whoami"
-                sh "sh /var/lib/jenkins/workspace/BankApp-Test/BankImageUpdate.sh ${BUILD_NUMBER}"
+                sh "sh /var/lib/jenkins/workspace/cicd/BankImageUpdate.sh ${BUILD_NUMBER}"
             }
             post {
                 failure {
