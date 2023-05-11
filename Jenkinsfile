@@ -95,7 +95,10 @@ pipeline {
 
                 sh "cd /var/lib/jenkins/workspace/cicd"
                 sh "git add bankapp-api-deployment-service.yaml"
+                sh "pwd"
+                sh "git status"
                 sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
+                sh "git status"
                 sh "git push origin main"
 
             }
