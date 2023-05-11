@@ -93,12 +93,12 @@ pipeline {
                 branch: 'main',
                 credentialsId: 'root-devvoo_git'
 
-                sh "sudo cd /var/lib/jenkins/workspace/cicd"
-                sh "git add bankapp-api-deployment-service.yaml"
-                sh "git status"
-                sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
-                sh "git push origin main"
-
+                dir('/var/lib/jenkins/workspace/cicd'){
+                    sh "git add bankapp-api-deployment-service.yaml"
+                    sh "git status"
+                    sh "git commit -m '[UPDATE] bankapp:Backend${BUILD_NUMBER} image versioning'"
+                    sh "git push origin main"
+                }
             }
             post {
                 failure {
