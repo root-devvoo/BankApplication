@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "2f4cfc81-ed76-43b9-b9c4-48de3ca39d62",
+		"name": "bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16511937"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "/api/join (회원가입)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"jwc\",\r\n    \"password\":\"1234\",\r\n    \"email\":\"jwc@gmail.com\",\r\n    \"fullname\":\"정우철\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/join",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"join"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/login (로그인)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"devvoo\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/login",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "/api/s/account (계좌 등록하기)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":1001,\r\n    \"password\":1234\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/login-user (계좌목록보기_유저별)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/login-user",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"login-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/1001 (1001 계좌 삭제하기)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/1001",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"1001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/account/deposit (계좌 입금하기)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":1001,\r\n    \"amount\":100,\r\n    \"gubun\":\"DEPOSIT\",\r\n    \"tel\":\"01022227777\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/account/deposit",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"account",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/withdraw (계좌 출금하기)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":1001,\r\n    \"amount\":50,\r\n    \"password\":1234,\r\n    \"gubun\":\"WITHDRAW\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/withdraw",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/1001 (1001 계좌 상세보기)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/1001?page=0",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"1001"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction",
+			"item": [
+				{
+					"name": "/api/s/account/1001/transaction?gubun=ALL&page=0 (1001 입출금목록보기-입출금)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/1001/transaction?gubun=ALL&page=0",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"1001",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "gubun",
+									"value": "ALL"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/1001/transaction?gubun=DEPOSIT&page=0 (1001 입출금목록보기-입금)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/1001/transaction?gubun=DEPOSIT&page=0",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"1001",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "gubun",
+									"value": "DEPOSIT"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/s/account/1001/transaction?gubun=WITHDRAW&page=0 (1001 입출금목록보기-출금)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYW5rIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjEsImV4cCI6MTY4NTA3NjMwNX0.-1ilBndL5HSvr1rv2gSNVHxYpwADYBy2AQIAyGpNGvSdDBWJ536eO7AENpJ23WJemnNvIgOC42_g9TqhUg6Bvw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://a818c9bab24604546a6985635efda80e-1206584861.ap-northeast-2.elb.amazonaws.com/api/s/account/1001/transaction?gubun=WITHDRAW&page=0",
+							"protocol": "http",
+							"host": [
+								"a818c9bab24604546a6985635efda80e-1206584861",
+								"ap-northeast-2",
+								"elb",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"s",
+								"account",
+								"1001",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "gubun",
+									"value": "WITHDRAW"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

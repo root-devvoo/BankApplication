@@ -44,3 +44,49 @@
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 ```
+
+### RDS MariaDB에 bank.sql적용 (DB 스키마, 테이블 생성)
+
+```sql
+create schema bank;
+
+use bank;
+
+create table user_tb (
+       id bigint auto_increment,
+       username varchar(255) not null unique,
+       password varchar(255) not null,
+       email varchar(255) not null,
+       fullname varchar(255) not null,
+       role varchar(255) not null,
+       created_at timestamp not null,
+       updated_at timestamp not null,
+       primary key (id)
+);
+create table account_tb (
+       id bigint auto_increment,
+        number bigint not null unique,
+        password varchar(255),
+        balance bigint not null,
+        user_id bigint,
+        created_at timestamp not null,
+        updated_at timestamp not null,
+        primary key (id)
+);
+create table transaction_tb (
+       id bigint auto_increment,
+       withdraw_account_id bigint,
+       deposit_account_id bigint,
+       amount bigint,
+       withdraw_account_balance bigint,
+        deposit_account_balance bigint,
+        gubun varchar(255) not null,
+        sender varchar(255),
+        receiver varchar(255),
+        tel varchar(255),
+        created_at timestamp not null,
+        updated_at timestamp not null,
+        primary key (id)
+);
+```
+
