@@ -89,4 +89,6 @@ create table transaction_tb (
         primary key (id)
 );
 ```
+### Argo CD를 통해 Amazon EKS 클러스터로 서비스 배포하기 위한 Manifest Repo
 
+> <https://github.com/root-devvoo/BankApplication_CICD>
