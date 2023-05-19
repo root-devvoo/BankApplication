@@ -35,7 +35,7 @@ import shop.mtcoding.bank.service.AccountService;
 public class AccountController {
     private final AccountService accountService;
 
-    @ApiOperation(value = "계좌 등록하기", notes = "계좌 등록하기")
+    @ApiOperation(value = "계좌 등록하기_변경확인", notes = "계좌 등록하기_변경확인")
     @PostMapping("/s/account")
     public ResponseEntity<?> saveAccount(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto, // validation 체크를 위해
             BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
